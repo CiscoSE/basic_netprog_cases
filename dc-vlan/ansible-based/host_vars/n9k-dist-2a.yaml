@@ -1,0 +1,17 @@
+---
+  host: "{{ ansible_host }}"
+  username: cisco
+  password: cisco
+  l3_interfaces:
+    - interface_type: Ethernet
+      interface_id: 1/1
+      description: VPC Keepalive Link
+      ip_address: 192.168.255.9
+      subnet_mask: 255.255.255.252
+      prefix: 30
+  l2_interfaces:
+      - interface_type: Port-Channel
+        interface_id: 1
+        mode: trunk
+        description: VPC Peer Link
+       

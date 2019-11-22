@@ -1,0 +1,16 @@
+---
+ n9k-dist-1a:
+  ip_addr: '172.16.30.111'
+  device_type: 'cisco_nxos'
+  port: '22'
+  mgmt_vlan: '110'
+  native_vlan: '999'
+  vlan_list: '10,20,30'
+
+ n9k-dist-2a:
+  ip_addr: '172.16.30.121'
+  device_type: 'cisco_ios'
+  port: '22'
+  mgmt_vlan: '120'
+  native_vlan: '999'
+  vlan_list: '40,50,60'

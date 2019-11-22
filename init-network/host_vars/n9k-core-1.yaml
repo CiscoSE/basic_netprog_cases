@@ -1,0 +1,33 @@
+---
+  host: "{{ ansible_host }}"
+  username: cisco
+  password: cisco
+  vpc:
+    domain: 10
+    pkl_dest: 192.168.255.2
+    pkl_src: 192.168.255.1
+    pkl_vrf: vpc-mgt
+    role_priority: 16000
+  l3_interfaces:
+    - interface_type: Ethernet
+      interface_id: 1/1
+      description: VPC Keepalive Link
+      ip_address: 192.168.255.1
+      subnet_mask: 255.255.255.252
+      prefix: 30
+  l2_interfaces:
+    # - interface_type: Ethernet
+    #   interface_id: 1/2
+    #   description: VPC Peer Link Member
+    #   mode: trunk
+    #   #trunk_vlans: 1-1000
+    # - interface_type: Ethernet
+    #   interface_id: 1/3
+    #   description: VPC Peer Link Member
+    #   mode: trunk
+    #   #trunk_vlans: 1-1000
+      - interface_type: Port-Channel
+        interface_id: 1
+        mode: trunk
+        description: VPC Peer Link
+       

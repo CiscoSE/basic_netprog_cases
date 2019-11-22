@@ -1,0 +1,60 @@
+---
+# This inventory is used to initalize the configuration of the virl 
+# topology.
+
+ all:
+  vars:
+   ansible_python_interpreter: /usr/bin/env python
+  children:
+    dist_row1:
+      hosts:
+        n9k-dist-1a:
+          ansible_host: 172.16.30.111
+          ansible_network_os: nxos
+          ansible_user: admin
+          ansible_ssh_pass: cisco
+          provider:
+            host: 172.16.30.101
+            username: admin
+            password: cisco
+            port: 22
+            timeout: 20
+        
+        n9k-dist-1b:
+          ansible_host: 172.16.30.112
+          ansible_network_os: nxos
+          ansible_user: admin
+          ansible_ssh_pass: cisco
+          provider:
+            host: 172.16.30.102
+            username: admin
+            password: cisco
+            port: 22
+            timeout: 20
+
+    dist_row2:
+      hosts:
+        n9k-dist-2a:
+          ansible_host: 172.16.30.121
+          ansible_network_os: nxos
+          ansible_user: admin
+          ansible_ssh_pass: cisco
+          provider:
+            host: 172.16.30.101
+            username: admin
+            password: cisco
+            port: 22
+            timeout: 20
+        
+        n9k-dist-2b:
+          ansible_host: 172.16.30.122
+          ansible_network_os: nxos
+          ansible_user: admin
+          ansible_ssh_pass: cisco
+          provider:
+            host: 172.16.30.102
+            username: admin
+            password: cisco
+            port: 22
+            timeout: 20
+    

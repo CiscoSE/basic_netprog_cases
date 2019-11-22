@@ -1,0 +1,46 @@
+interface GigabitEthernet0/0/0.200
+encapsulation dot1Q 200
+ip address {{mpls_address}} {{mpls_mask}}
+!
+interface GigabitEthernet0/0/0.300
+encapsulation dot1Q 300
+ip vrf forwarding red
+ip address {{red_address}} 255.255.255.252
+!
+router bgp {{local_asn}}
+bgp router-id {{mpls_address}}
+neighbor {{mpls_peer}} remote-as {{remote_asn}}
+neighbor {{mpls_peer}} update-source GigabitEthernet0/0/0.200
+neighbor {{mpls_peer}} version 4
+neighbor {{mpls_peer}} timers 15 45
+!
+address-family ipv4
+  network {{mpls_net}} mask {{mpls_mask}}
+  neighbor {{mpls_peer}} activate
+  neighbor {{mpls_peer}} send-community both
+  neighbor {{mpls_peer}} soft-reconfiguration inbound
+  neighbor {{mpls_peer}} route-map rm-rts-received-from-corp in
+  neighbor {{mpls_peer}} route-map rm-rts-advertised-to-corp out
+exit-address-family
+!
+address-family ipv4 vrf red
+  bgp router-id {{red_address}}
+  network {{red_net}} mask 255.255.255.252
+  neighbor {{red_peer}} remote-as {{remote_asn}}
+  neighbor {{red_peer}} update-source GigabitEthernet0/0/0.300
+  neighbor {{red_peer}} version 4
+  neighbor {{red_peer}} timers 15 45
+  neighbor {{red_peer}} activate
+  neighbor {{red_peer}} route-map rm-rts-received-from-red in
+  neighbor {{red_peer}} route-map rm-rts-advertised-to-red out
+  neighbor {{red_peer}} send-community both
+  neighbor x{{red_peer}} soft-reconfiguration inbound
+exit-address-family
+!
+route-map rm-rts-received-from-red permit 100
+!
+route-map rm-rts-advertised-to-red permit 100
+!
+route-map rm-rts-received-from-corp permit 100
+!
+route-map rm-rts-advertised-to-corp permit 100

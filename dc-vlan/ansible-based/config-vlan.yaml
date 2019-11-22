@@ -1,0 +1,71 @@
+---
+- name: Configure New L3 Vlan and extend to Server Distribution
+  hosts: core
+  connection: network_cli
+  gather_facts: no
+
+  tasks:
+  - name: Configure Vlan in Vlan DB
+    nxos_vlan:
+      name: ANS_VLAN
+      vlan_id: 200
+  
+  - name: Define Vlan Interface
+    nxos_interface:
+      name: vlan200
+      state: present
+      mode: layer3
+  
+  - name: Configure L3 VLAN interface
+    with_items: "{{ l3_interfaces }}"
+    nxos_l3_interface:
+      name: "{{ item.interface_type }}{{ item.interface_id }}"
+      ipv4: "{{ item.ip_address }}/{{ item.prefix }}"
+  
+  - name: Configure HSRP for Vlan
+    nxos_hsrp:
+      group: 200
+      vip: 10.0.200.1
+      priority: 150
+      interface: vlan200
+
+  - name: Extend VLAN to Distribution Switches
+    with_items: "{{ dist_po }}"
+    nxos_l2_interface:
+      interface: "{{ item.name }}"
+      mode: trunk
+      trunk_vlans: 200
+
+- name: Configure New Vlan on Row1 Distribution
+  hosts: dist_row1
+  connection: network_cli
+  gather_facts: no
+
+  tasks:
+  - name: Configure Vlan in Vlan DB
+    nxos_vlan:
+      name: ANS_VLAN
+      vlan_id: 200
+  
+  - name: Extend VLAN to Core
+    nxos_l2_interface:
+      interface: port-channel10
+      mode: trunk
+      trunk_vlans: 200
+
+- name: Configure New Vlan on Row2 Distribution
+  hosts: dist_row2
+  connection: network_cli
+  gather_facts: no
+
+  tasks:
+  - name: Configure Vlan in Vlan DB
+    nxos_vlan:
+      name: ANS_VLAN
+      vlan_id: 200
+  
+  - name: Extend VLAN to Core
+    nxos_l2_interface:
+      interface: port-channel10
+      mode: trunk
+      trunk_vlans: 200

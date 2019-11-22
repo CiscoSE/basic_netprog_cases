@@ -1,0 +1,141 @@
+---
+- name: Configure Data Center Core
+  hosts: all
+  connection: network_cli
+  gather_facts: no
+
+  tasks:
+  - name: Enable NX Features
+    with_items: "{{ features }}"
+    nxos_feature:
+      feature: "{{ item }}"
+
+  - name: Configure VRF for VPC Keepalive Traffic
+    with_items: "{{ vrf }}"
+    nxos_vrf:
+      name: "{{ item.vrf_name }}"
+      description: "{{ item.description }}"
+      state: "{{ item.state }}"
+      interfaces: "{{ item.interfaces }}"
+  
+  - name: Configure L3 Interfaces
+    with_items: "{{ l3_interfaces }}"
+    nxos_interface:
+      interface: "{{ item.interface_type }}{{ item.interface_id }}"
+      description: "{{ item.description }}"
+      admin_state: up
+  
+  - name: Configure VPC PL Keepalive L3 Interface
+    with_items: "{{ l3_interfaces }}"
+    nxos_l3_interface:
+      name: "{{ item.interface_type }}{{ item.interface_id }}"
+      ipv4: "{{ item.ip_address }}/{{ item.prefix }}"
+
+  - name: Configure VPC Peer Link Port Channel
+    with_items: "{{ vpc_pl }}"
+    nxos_linkagg:
+      group: "{{ item.id }}"
+      mode: "{{item.mode}}"
+      members: "{{ item.interfaces }}"
+  - name: Configure L2 Settings for Peer Link Ports
+    with_items: "{{ l2_interfaces }}"
+    nxos_l2_interface:
+      name: "{{ item.interface_type }}{{ item.interface_id }}"
+      mode: "{{ item.mode }}"
+  
+  
+  - name: Configure VPC Domain
+    nxos_vpc:
+      domain: "{{ vpc['domain'] }}"
+      auto_recovery: yes
+      delay_restore: 360
+      peer_gw: yes
+      pkl_dest: "{{ vpc['pkl_dest'] }}"
+      pkl_src: "{{ vpc['pkl_src'] }}"
+      pkl_vrf: "{{ vpc['pkl_vrf'] }}"
+      role_priority: "{{ vpc['role_priority'] }}"
+  
+  - name: Set VPC Peer Link
+    nxos_vpc_interface:
+      portchannel: 1
+      peer_link: yes
+  
+  - name: Configure Base VLAN Database
+    nxos_vlan:
+      vlan_range: '10-29'
+      state: present
+
+- name: Configure Core to Distribution Connectivity
+  hosts: core
+  connection: network_cli
+  gather_facts: no
+
+  tasks:
+  - name: Configure Port Channel between Core and Distribution
+    with_items: "{{ l2_po }}"
+    nxos_linkagg:
+      group: "{{ item.vpc_id }}"
+      mode: "{{item.po_mode}}"
+      members: "{{ item.interfaces }}"
+  - name: Configure Core VPC to Distribution
+    with_items: "{{ l2_po }}"
+    nxos_vpc_interface:
+      portchannel: "{{ item.vpc_id }}"
+      vpc: "{{ item.vpc_id }}"
+  - name: Configure vPC L2 settings
+    with_items: "{{ l2_po }}"
+    nxos_l2_interface:
+      name: "{{ item.name }}"
+      mode: "{{ item.sw_mode }}"
+      trunk_allowed_vlans: "{{ item.trunk_vlans }}"
+      state: present
+
+- name: Configure Row1 to Core Connectivity
+  hosts: dist_row1
+  connection: network_cli
+  gather_facts: no
+
+  tasks:
+  - name: Configure Port Channel between Row1 and Core
+    with_items: "{{ l2_po }}"
+    nxos_linkagg:
+      group: "{{ item.vpc_id }}"
+      mode: "{{item.po_mode}}"
+      members: "{{ item.interfaces }}"
+  - name: Configure Core VPC to Core
+    with_items: "{{ l2_po }}"
+    nxos_vpc_interface:
+      portchannel: "{{ item.vpc_id }}"
+      vpc: "{{ item.vpc_id }}"
+  - name: Configure vPC L2 settings
+    with_items: "{{ l2_po }}"
+    nxos_l2_interface:
+      name: "{{ item.name }}"
+      mode: "{{ item.sw_mode }}"
+      trunk_allowed_vlans: "{{ item.trunk_vlans }}"
+      state: present
+
+- name: Configure Row1 to Core Connectivity
+  hosts: dist_row2
+  connection: network_cli
+  gather_facts: no
+
+  tasks:
+  - name: Configure Port Channel between Row2 and Distribution
+    with_items: "{{ l2_po }}"
+    nxos_linkagg:
+      group: "{{ item.vpc_id }}"
+      mode: "{{item.po_mode}}"
+      members: "{{ item.interfaces }}"
+  - name: Configure Core VPC to Core
+    with_items: "{{ l2_po }}"
+    nxos_vpc_interface:
+      portchannel: "{{ item.vpc_id }}"
+      vpc: "{{ item.vpc_id }}"
+  - name: Configure vPC L2 settings
+    with_items: "{{ l2_po }}"
+    nxos_l2_interface:
+      name: "{{ item.name }}"
+      mode: "{{ item.sw_mode }}"
+      trunk_allowed_vlans: "{{ item.trunk_vlans }}"
+      state: present

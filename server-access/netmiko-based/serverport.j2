@@ -1,0 +1,7 @@
+interface {{ intf_name }}
+ description ***Generated Interface Configuration connecting to {{ dev_name }}
+ switchport mode trunk
+ switchport trunk native vlan {{ native_vlan }}
+ switchport trunk allowed vlan {{ vlan_list }}
+ spanning-tree portfast
+ no shutdown

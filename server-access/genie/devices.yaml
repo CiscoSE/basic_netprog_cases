@@ -1,0 +1,48 @@
+devices:
+  n9k-dist-1a:
+    type: 'Nexus'
+    os: 'nxos'
+    tacacs:
+      username: admin
+    passwords:
+      tacacs: cisco
+    connections:
+      mgmt:
+        protocol: ssh
+        ip: 172.16.30.111
+        
+  n9k-dist-1b:
+    type: 'Nexus'
+    os: 'nxos'
+    tacacs:
+      username: admin
+    passwords:
+      tacacs: cisco
+    connections:
+      mgmt:
+        protocol: ssh
+        ip: 172.16.30.112
+
+  n9k-dist-2a:
+    type: 'Nexus'
+    os: 'nxos'
+    tacacs:
+      username: admin
+    passwords:
+      tacacs: cisco
+    connections:
+      mgmt:
+        protocol: ssh
+        ip: 172.16.30.121
+  
+  n9k-dist-2b:
+    type: 'Nexus'
+    os: 'nxos'
+    tacacs:
+      username: admin
+    passwords:
+      tacacs: cisco
+    connections:
+      mgmt:
+        protocol: ssh
+        ip: 172.16.30.122

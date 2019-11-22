@@ -1,0 +1,11 @@
+---
+  l2_po:
+    - name: Port-Channel10
+      description: Uplink to Core
+      po_mode: active
+      sw_mode: trunk
+      trunk_vlans: 20-29
+      vpc_id: 10
+      interfaces:
+        - Ethernet1/4
+        - Ethernet1/5

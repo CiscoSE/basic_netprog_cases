@@ -1,0 +1,20 @@
+---
+  features:
+    - udld
+    - interface-vlan
+    - lacp
+    - vpc
+    - eigrp
+    - hsrp
+  vrf:
+    - vrf_name: vpc-mgt
+      description: VPC Keepalive Network
+      state: present
+      interfaces:
+        - Ethernet1/1
+  vpc_pl:
+    - id: 1
+      mode: active
+      interfaces:
+        - Ethernet1/2
+        - Ethernet1/3

@@ -1,0 +1,20 @@
+---
+  l2_po:
+    - name: Port-Channel10
+      description: Uplink to Row 1
+      po_mode: active
+      sw_mode: trunk
+      trunk_vlans: 10-19
+      vpc_id: 10
+      interfaces:
+        - Ethernet1/4
+        - Ethernet1/5
+    - name: Port-Channel20
+      description: Uplink to Row 2
+      po_mode: active
+      sw_mode: trunk
+      trunk_vlans: 20-29
+      vpc_id: 20
+      interfaces:
+        - Ethernet1/6
+        - Ethernet1/7

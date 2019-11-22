@@ -1,0 +1,6 @@
+---
+dist_po:
+    - name: Port-Channel10
+      trunk_allowed_vlans: 10-19
+    - name: Port-Channel20
+      trunk_allowed_vlans: 20-29

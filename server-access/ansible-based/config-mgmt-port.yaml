@@ -1,0 +1,20 @@
+---
+- name: Configure Port for Management Access
+  hosts: n9k-dist-1b
+  connection: network_cli
+  gather_facts: no
+
+  tasks:
+  - name: Configure Vlan in Vlan DB
+    nxos_vlan:
+      name: MGMT-VLAN
+      vlan_id: 110
+      state: present
+  
+  - name: Configure Management Port
+    nxos_l2_interface:
+      interface: Ethernet1/20
+      mode: access
+      access_vlan: 110
+      state: present
+      

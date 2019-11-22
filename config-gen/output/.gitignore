@@ -1,0 +1,3 @@
+# Directory Required for scripts to excute but no files to be included in commits
+*
+!.gitignore

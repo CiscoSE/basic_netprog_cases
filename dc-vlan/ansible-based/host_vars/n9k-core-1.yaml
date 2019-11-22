@@ -1,0 +1,17 @@
+---
+  host: "{{ ansible_host }}"
+  username: cisco
+  password: cisco
+  l3_interfaces:
+    - interface_type: vlan
+      interface_id: 200
+      description: Ansible Configured Vlan
+      ip_address: 10.0.200.253
+      subnet_mask: 255.255.255.0
+      prefix: 24
+  l2_interfaces:
+      - interface_type: Port-Channel
+        interface_id: 1
+        mode: trunk
+        description: VPC Peer Link
+       

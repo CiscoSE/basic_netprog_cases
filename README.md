@@ -57,7 +57,7 @@ To start using these demo use cases and scripts complete the following steps. Th
 *Installation Steps*
 1. Clone down repository to your local workstation
         
-        git clone gh:.......
+        git clone https://github.com/CiscoSE/basic_netprog_cases.git
 2. Move to the cloned directory root
 
         cd basic_netprog_cases

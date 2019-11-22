@@ -1,0 +1,20 @@
+---
+- name: Configure New Vlan on Row1 Distribution
+  hosts: n9k-dist-1b
+  connection: network_cli
+  gather_facts: no
+
+  tasks:
+  - name: Configure Vlan and Associate to Interfaces
+    nxos_vlan:
+      vlan_range: '10,20,30,999'
+      state: present
+
+  
+  - name: Configure Management Port
+    nxos_l2_interface:
+      interface: Ethernet1/21
+      mode: trunk
+      native_vlan: 999
+      trunk_allowed_vlans: 10,20,30,40
+      state: present
