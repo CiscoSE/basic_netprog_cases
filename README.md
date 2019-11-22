@@ -64,7 +64,7 @@ To start using these demo use cases and scripts complete the following steps. Th
 3. Prepare virtual environment
 
         make prepenv
-4. See demo-script.md for steps to complete demonstrations.
+4. See [demo-script.md](https://github.com/CiscoSE/basic_netprog_cases) for steps to complete demonstrations.
 
 It is estimated that about 15 minutes is required to start to topology, the topology is requried for use cases 2 and 3 only.
 
