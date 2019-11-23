@@ -10,7 +10,11 @@ Once the DevNet virl topology is reachable and all nodes are active complete the
 
         make topology
 
+    ![Topology](images/topology.png)
+
 Once the ansible playbook is complete you should have 12 changes and the demonstration topology should be ready for use cases 2 and 3.
+
+![Topology](images/ansible_play_init.png)
 
 ## Config Generation Demonstration
     cd config-gen
