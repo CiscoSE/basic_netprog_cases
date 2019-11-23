@@ -71,6 +71,7 @@ Execute the ansible playbook and demostrate running a second time showing that c
 ### Demo 3 Genie Verification
 
 Return to genie folder and learn interfaces again and complete diff showing the actual change expected has been completed
+    
     cd ../genie
 
     genie learn interface --testbed-file devices.yaml --devices n9k-dist-1a --output change1a

@@ -45,7 +45,7 @@ Refer to the demo-script.md for steps to execute the demo scenarios.
 
 ## Installation
 
-To start using these demo use cases and scripts complete the following steps. The steps have been validated on macOS and linux subsystem for windows, use on windows may require additional steps that are not documented here. 
+To start using these demo use cases and scripts complete the following steps. The steps have been validated on macOS and Windows subsystem for linux (WSL), use on windows may require additional steps that are not documented here. 
 
 *Prerequisites*
 - Python3.7 installed
@@ -64,6 +64,10 @@ To start using these demo use cases and scripts complete the following steps. Th
 3. Prepare virtual environment
 
         make prepenv
+> **Note WSL requires an extra step to allow for ansible to use the contained ansible.cfg files run the following if using WSL**
+>
+>        export ANSIBLE_CONFIG=./ansible.cfg
+
 4. See [demo-script.md](https://github.com/CiscoSE/basic_netprog_cases/blob/master/demo-script.md) for steps to complete demonstrations.
 
 It is estimated that about 15 minutes is required to start to topology, the topology is requried for use cases 2 and 3 only.
