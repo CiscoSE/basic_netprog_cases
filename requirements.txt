@@ -44,7 +44,7 @@ ipython-genutils==0.2.0
 isort==4.3.21
 IxNetwork==9.0.1915.16
 jedi==0.15.1
-Jinja2==2.10.1
+Jinja2==2.11.3
 jinja2-time==0.2.0
 jsonpickle==1.2
 junit-xml==1.8
