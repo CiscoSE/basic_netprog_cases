@@ -1,4 +1,4 @@
-aiohttp==3.6.2
+aiohttp==3.7.4
 ansible==2.9.20
 appnope==0.1.0
 arrow==0.15.2
